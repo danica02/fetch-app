@@ -7,45 +7,68 @@ function App() {
   const [hasError, setHasError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   
 
   const fetchUsers = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then((response) => response.json())
       .then((result) => {
-        setUsers(result)
-        setIsLoading(false)
+        setUsers(result);
+        setIsLoading(false);
       })
       .catch((error) => {
-        setHasError(true)
-        setIsLoading(false)
+        setHasError(true);
+        setIsLoading(false);
         setErrorMessage(error.message)
-      })
-  }
+      });
+  };
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   return (
     <div className='App'>
       <h1>Random Users</h1>
-      <Form userId={1} />
+      <Form userId={id} editTitle={title} editBody={body} />
       <br />
       <br />
       {hasError ? <p>{errorMessage}</p> : null}
       {!isLoading ? (
-        <ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Body</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
           {users.map(({ id, title, body }) => (
             <>
-              <li key={id}>
-                <p>Title: {title}</p>
-                <p>Body: {body}</p>
-              </li>
-              <hr />
+              <tr key={id}>
+                <td>{title}</td>
+                <td>{body}</td>
+                <td>
+                <button
+                  onClick={(e) => { e.preventDefault()
+                    setId(id);
+                    setTitle(title);
+                    setBody(body);
+                  }}
+                >
+                  Edit
+                </button>
+                </td>                
+              </tr>
             </>
           ))}
-        </ul>
+          </tbody>
+        </table>
       ) : (
         <h3>loading...</h3>
       )}

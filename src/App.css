@@ -34,3 +34,27 @@
     transform: rotate(360deg);
   }
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;}
+
+tr > th {
+	background-color: #ccebff;}
+
+td, th {
+  border: 1px solid #00BDFE;
+  text-align: left;
+  padding: 8px;}
+
+tr:nth-child(even) {
+  background-color: #F4FBFF;}
+
+tr:nth-child(odd) {
+  background-color: #FFF;}
+
+.tableWrapper{
+  overflow: auto;
+  padding: 2rem 5rem;
+  align-items: flex-start !important;}
